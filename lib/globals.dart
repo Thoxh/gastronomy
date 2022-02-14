@@ -1,6 +1,3 @@
-library gastronomy.globals;
+library gastronomy;
 
-import 'package:flutter/material.dart';
-import 'package:gastronomy/screens/order_screen.dart';
-
-Widget activeWidget = Bestellungen();
+String activeEventOrders = "Orders";

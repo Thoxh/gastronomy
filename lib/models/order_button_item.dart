@@ -21,6 +21,7 @@ class OrderButton {
 class OrderButtonItem extends StatelessWidget {
   final OrderButton? orderButton;
 
+  /// define data of the order and send it to the provider to add it to the list
   void addOrder(BuildContext context) {
     final order = Order(
         createdTime: DateFormat('hh:mm').format(DateTime.now()),

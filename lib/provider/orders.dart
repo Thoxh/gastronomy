@@ -1,85 +1,50 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:gastronomy/models/order_item.dart';
 import 'package:intl/intl.dart';
+import 'package:gastronomy/api/firebase_api.dart';
 
 class OrderProvider extends ChangeNotifier {
   /// Private List containing orders with there parameters
-  final List<Order> _orders = [
-    Order(
-        icon: "assets/icons/Wine.png",
-        title: "Weiß Wein Trocken",
-        desk: 12,
-        createdTime: DateFormat('hh:mm').format(DateTime.now()),
-        id: "1",
-        isDone: false),
-    Order(
-        icon: "assets/icons/Beer.png",
-        title: "Bier",
-        desk: 12,
-        createdTime: DateFormat('hh:mm').format(DateTime.now()),
-        id: "1",
-        isDone: false),
-    Order(
-        icon: "assets/icons/Cocktail.png",
-        title: "Pina Colada",
-        desk: 12,
-        createdTime: DateFormat('hh:mm').format(DateTime.now()),
-        id: "1",
-        isDone: false),
-    Order(
-        icon: "assets/icons/Water.png",
-        title: "Stilles Wasser",
-        desk: 12,
-        createdTime: DateFormat('hh:mm').format(DateTime.now()),
-        id: "1",
-        isDone: false),
-    Order(
-        icon: "assets/icons/Water.png",
-        title: "Stilles Wasser",
-        desk: 12,
-        createdTime: DateFormat('hh:mm').format(DateTime.now()),
-        id: "1",
-        isDone: false),
-    Order(
-        icon: "assets/icons/Water.png",
-        title: "Stilles Wasser",
-        desk: 12,
-        createdTime: DateFormat('hh:mm').format(DateTime.now()),
-        id: "1",
-        isDone: false),
-    Order(
-        icon: "assets/icons/Water.png",
-        title: "Stilles Wasser",
-        desk: 12,
-        createdTime: DateFormat('hh:mm').format(DateTime.now()),
-        id: "1",
-        isDone: false),
-    Order(
-        icon: "assets/icons/Water.png",
-        title: "Stilles Wasser",
-        desk: 12,
-        createdTime: DateFormat('hh:mm').format(DateTime.now()),
-        id: "1",
-        isDone: false),
-  ];
+  List<Order> _orders = [];
 
-  /// Getter List for orders to access the elements
+  /// Getter list for orders to access the elements with isDone = false
   List<Order> get orders =>
       _orders.where((order) => order.isDone == false).toList();
 
+  /// Getter list for orders to access the elements with isDone = true
+  List<Order> get doneOrders =>
+      _orders.where((order) => order.isDone == true).toList();
+
   void addOrder(Order order) {
-    _orders.add(order);
-    notifyListeners();
+    /// Firebase logic
+    FirebaseApi.addOrder(order);
+
+    /// Local logic
+    /*_orders.add(order);
+    notifyListeners(); */
   }
 
   void removeOrder(Order? order) {
-    _orders.remove(order);
-    notifyListeners();
+    FirebaseApi.deleteOrder(order!);
+
+    /// Local logic
+    /*_orders.remove(order);
+    notifyListeners();*/
   }
 
   bool toggleOrderisDone(Order? order) {
     order!.isDone = !order.isDone;
-    notifyListeners();
+    FirebaseApi.updateOrder(order);
+    //notfiyListeners();
     return order.isDone;
+  }
+
+  void setOrders(List<Order> orders) {
+    // update app after build is complete - would cause problems with the provider without
+    WidgetsBinding.instance?.addPostFrameCallback((_) {
+      _orders = orders;
+      notifyListeners();
+    });
   }
 }

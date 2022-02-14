@@ -2,6 +2,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:gastronomy/api/firebase_api.dart';
 import 'package:gastronomy/constants.dart';
 import 'package:gastronomy/models/order_item.dart';
 import 'package:gastronomy/provider/orderbuttons.dart';
@@ -61,7 +62,34 @@ class Bestellungen extends StatelessWidget {
                       const SizedBox(
                         height: kDefaultPadding,
                       ),
-                      const Expanded(child: OrderList())
+                      Expanded(
+                          child: StreamBuilder<List<Order>>(
+                              stream: FirebaseApi.readOrders(),
+                              builder: ((context, snapshot) {
+                                switch (snapshot.connectionState) {
+                                  case ConnectionState.waiting:
+                                    return Center(
+                                      child: CircularProgressIndicator(),
+                                    );
+                                  default:
+                                    if (snapshot.hasError) {
+                                      return Text(
+                                          "Irgendetwas ist schief gelaufen.");
+                                    } else {
+                                      if (snapshot.hasData) {
+                                        final orders = snapshot.data;
+                                        final provider =
+                                            Provider.of<OrderProvider>(context);
+                                        provider.setOrders(orders!);
+                                        return OrderList();
+                                      } else {
+                                        return Text("Überprüfe die Verbindung");
+                                      }
+                                    }
+                                }
+                              }))
+                          //OrderList()
+                          )
                     ],
                   ),
                 ),

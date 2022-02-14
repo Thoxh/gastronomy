@@ -25,6 +25,25 @@ class Order {
     this.id,
     this.status,
   });
+
+  Map<String, dynamic> toJson() => {
+        'createdTime': createdTime,
+        'icon': icon,
+        'title': title,
+        'id': id,
+        'desk': desk,
+        'status': status,
+        'isDone': isDone,
+      };
+
+  static Order fromJson(Map<String, dynamic> json) => Order(
+      createdTime: json['createdTime'],
+      icon: json['icon'],
+      title: json['title'],
+      id: json['id'],
+      desk: json['desk'],
+      status: json['status'],
+      isDone: json['isDone']);
 }
 
 class OrderItem extends StatelessWidget {
@@ -75,7 +94,9 @@ class OrderItem extends StatelessWidget {
                           ),
                           children: [
                         TextSpan(
-                            text: "Tisch " + order!.desk.toString(),
+                            text: (order!.desk != 0)
+                                ? "Tisch " + order!.desk.toString()
+                                : "Abholung Bar",
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2
