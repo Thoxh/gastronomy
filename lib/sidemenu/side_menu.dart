@@ -4,11 +4,11 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gastronomy/constants.dart';
 import 'package:gastronomy/extensions/neumorphism.dart';
-import 'package:gastronomy/screens/bestellungen.dart';
-import 'package:gastronomy/screens/statistik.dart';
+import 'package:gastronomy/screens/order_screen.dart';
+import 'package:gastronomy/screens/statistic_screen.dart';
 import 'package:gastronomy/sidemenu/add_order_dialog.dart';
 import 'package:gastronomy/models/side_menu_item.dart';
-import 'package:gastronomy/screens/archiv.dart';
+import 'package:gastronomy/screens/archive_screen.dart';
 import 'package:provider/provider.dart';
 
 import '../provider/sidemenu.dart';

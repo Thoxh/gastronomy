@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:gastronomy/provider/orderbuttons.dart';
 import 'package:gastronomy/provider/orders.dart';
 import 'package:gastronomy/provider/sidemenu.dart';
 import 'package:gastronomy/screens/main_screen.dart';
@@ -12,7 +13,8 @@ void main() async {
   runApp(MultiProvider(
     providers: [
       ChangeNotifierProvider(create: (context) => ActiveWidgetNotifier()),
-      ChangeNotifierProvider(create: (context) => OrderProvider())
+      ChangeNotifierProvider(create: (context) => OrderProvider()),
+      ChangeNotifierProvider(create: (context) => OrderButtonProvider()),
     ],
     child: App(),
   ));

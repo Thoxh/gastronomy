@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:gastronomy/constants.dart';
+import 'package:gastronomy/dialogs/remove_order_dialog.dart';
+import 'package:gastronomy/provider/orders.dart';
+import 'package:gastronomy/sidemenu/add_order_dialog.dart';
+import 'package:provider/provider.dart';
 import 'status_item.dart';
 import 'package:gastronomy/extensions/neumorphism.dart';
-
-class OrderField {
-  static const createdTime = 'createdTime';
-}
 
 class Order {
   String createdTime;
@@ -14,16 +14,16 @@ class Order {
   String? id;
   int desk;
   int? status;
-  bool? isDone;
+  bool isDone;
 
   Order({
     required this.createdTime,
     required this.icon,
     required this.title,
     required this.desk,
+    required this.isDone,
     this.id,
     this.status,
-    this.isDone,
   });
 }
 
@@ -38,7 +38,16 @@ class OrderItem extends StatelessWidget {
       padding: const EdgeInsets.symmetric(vertical: kDefaultPadding / 2),
       child: InkWell(
         onTap: (() {}),
-        onDoubleTap: (() {}),
+        onDoubleTap: () {
+          final provider = Provider.of<OrderProvider>(context, listen: false);
+          final isDone = provider.toggleOrderisDone(order);
+        },
+        onLongPress: () {
+          showDialog(
+              context: context,
+              builder: (BuildContext context) =>
+                  RemoveOrderDialogWidget(order: order));
+        },
         child: Stack(
           children: [
             Container(

@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:gastronomy/constants.dart';
+import 'package:gastronomy/models/order_button_item.dart';
 import 'package:gastronomy/responsive.dart';
 import 'package:gastronomy/sidemenu/side_menu.dart';
 import 'package:provider/provider.dart';
@@ -14,11 +16,10 @@ class MainScreen extends StatelessWidget {
     return Scaffold(
       body: Row(
         children: [
-          Expanded(flex: 3, child: SideMenu()),
+          Expanded(flex: 2, child: SideMenu()),
           Expanded(
-              flex: 5,
+              flex: 6,
               child: Provider.of<ActiveWidgetNotifier>(context).activeWidget),
-          Expanded(flex: 5, child: Container()),
         ],
       ),
     );

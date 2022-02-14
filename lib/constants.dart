@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
-
-// All of our constant stuff
 
 const kPrimaryColor = Color(0xFF366CF6);
 const kSecondaryColor = Color(0xFFF5F6FC);
@@ -14,5 +11,3 @@ const kTextColor = Color(0xFF4D5875);
 
 const kDefaultPadding = 20.0;
 const version = "0.1";
-
-
