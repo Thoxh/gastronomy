@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class StatusItem extends StatelessWidget {
-  const StatusItem({Key? key}) : super(key: key);
+  const StatusItem({Key? key, required this.color}) : super(key: key);
+
+  final Color color;
 
   @override
   Widget build(BuildContext context) {

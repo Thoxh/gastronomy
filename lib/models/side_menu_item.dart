@@ -1,22 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:gastronomy/constants.dart';
+import 'package:badges/badges.dart';
+import 'package:provider/provider.dart';
+
+import '../provider/orders.dart';
 
 class SideMenuItem extends StatelessWidget {
   // ignore: prefer_const_constructors_in_immutables
   SideMenuItem({
     Key? key,
-    this.itemCount = 0,
     this.showBorder = true,
     this.textColor,
-    @required this.icon,
-    @required this.title,
+    this.showBadge = false,
+    required this.icon,
+    required this.title,
     required this.toggleActiveState,
     required this.activeState,
   }) : super(key: key);
 
   final bool activeState;
   final bool showBorder;
-  final int itemCount;
+  final bool showBadge;
   final Icon? icon;
   final String? title;
   final Color? textColor;
@@ -24,6 +28,11 @@ class SideMenuItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // conncect to order provider
+    final provider = Provider.of<OrderProvider>(context);
+    // access orders from provider
+    final ordersFromProvider = provider.orders;
+
     return Padding(
       padding: const EdgeInsets.only(top: kDefaultPadding),
       child: InkWell(
@@ -63,7 +72,17 @@ class SideMenuItem extends StatelessWidget {
                           ),
                     ),
                     const Spacer(),
-                    // if (itemCount != null) CounterBadge(count: itemCount)
+                    if (showBadge && ordersFromProvider.length != 0)
+                      Badge(
+                        animationType: BadgeAnimationType.scale,
+                        animationDuration: Duration(milliseconds: 200),
+                        badgeContent: Text(
+                          ordersFromProvider.length.toString(),
+                          style: TextStyle(color: Colors.white, fontSize: 12),
+                        ),
+                        padding: EdgeInsets.all(5.5),
+                        badgeColor: kPrimaryColor,
+                      )
                   ],
                 ),
               ),

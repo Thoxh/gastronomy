@@ -17,7 +17,6 @@ void main() async {
     ],
     child: App(),
   ));
-  //(_) => ActiveWidgetNotifier(), child: App()));
 }
 
 class App extends StatelessWidget {

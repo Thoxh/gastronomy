@@ -68,12 +68,12 @@ class Bestellungen extends StatelessWidget {
                               builder: ((context, snapshot) {
                                 switch (snapshot.connectionState) {
                                   case ConnectionState.waiting:
-                                    return Center(
+                                    return const Center(
                                       child: CircularProgressIndicator(),
                                     );
                                   default:
                                     if (snapshot.hasError) {
-                                      return Text(
+                                      return const Text(
                                           "Irgendetwas ist schief gelaufen.");
                                     } else {
                                       if (snapshot.hasData) {
@@ -81,15 +81,14 @@ class Bestellungen extends StatelessWidget {
                                         final provider =
                                             Provider.of<OrderProvider>(context);
                                         provider.setOrders(orders!);
-                                        return OrderList();
+                                        return const OrderList();
                                       } else {
-                                        return Text("Überprüfe die Verbindung");
+                                        return const Text(
+                                            "Überprüfe die Verbindung");
                                       }
                                     }
                                 }
-                              }))
-                          //OrderList()
-                          )
+                              })))
                     ],
                   ),
                 ),
@@ -124,6 +123,7 @@ class Bestellungen extends StatelessWidget {
   }
 }
 
+/// Build-Methode of the Order-ListView
 class OrderList extends StatelessWidget {
   const OrderList({Key? key}) : super(key: key);
 
@@ -153,6 +153,7 @@ class OrderList extends StatelessWidget {
   }
 }
 
+/// Build-Methode of the OrderButton-ListView
 class OrderButtonList extends StatelessWidget {
   const OrderButtonList({Key? key}) : super(key: key);
   @override

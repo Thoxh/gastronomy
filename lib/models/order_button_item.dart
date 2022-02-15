@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:gastronomy/constants.dart';
 import 'package:gastronomy/models/order_item.dart';
@@ -24,7 +26,7 @@ class OrderButtonItem extends StatelessWidget {
   /// define data of the order and send it to the provider to add it to the list
   void addOrder(BuildContext context) {
     final order = Order(
-        createdTime: DateFormat('hh:mm').format(DateTime.now()),
+        createdTime: DateFormat('HH:mm').format(DateTime.now()),
         icon: orderButton!.icon,
         title: orderButton!.title,
         desk: 0,
@@ -33,6 +35,9 @@ class OrderButtonItem extends StatelessWidget {
         isDone: false);
     final provider = Provider.of<OrderProvider>(context, listen: false);
     provider.addOrder(order);
+    Timer(Duration(seconds: 5), () {
+      provider.toggleOrderStatus(order, 1);
+    });
   }
 
   const OrderButtonItem({Key? key, @required this.orderButton})

@@ -40,6 +40,12 @@ class OrderProvider extends ChangeNotifier {
     return order.isDone;
   }
 
+  int toggleOrderStatus(Order? order, int i) {
+    order!.status = i;
+    FirebaseApi.updateOrder(order);
+    return order.status;
+  }
+
   void setOrders(List<Order> orders) {
     // update app after build is complete - would cause problems with the provider without
     WidgetsBinding.instance?.addPostFrameCallback((_) {

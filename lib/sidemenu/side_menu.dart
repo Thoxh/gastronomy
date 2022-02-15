@@ -44,7 +44,7 @@ class SideMenuState extends State<SideMenu> {
             // SideMenuHeader(),
             SizedBox(height: kDefaultPadding),
             AddButton(
-              buttonText: "Neue Bestellung",
+              buttonText: "Geburtstag Dajana",
               buttonBackgroundColor: kPrimaryColor,
               press: () {
                 showDialog(
@@ -53,7 +53,7 @@ class SideMenuState extends State<SideMenu> {
               },
               textColor: Colors.white,
               icon: Icon(
-                Icons.add,
+                Icons.event,
                 color: Colors.white,
                 size: 16,
               ),
@@ -88,6 +88,7 @@ class SideMenuState extends State<SideMenu> {
                 activeState: isActive,
                 textColor: isActiveList[0] ? kTextColor : kGrayColor,
                 title: "Bestellungen",
+                showBadge: true,
                 toggleActiveState: (activeState) {
                   Provider.of<ActiveWidgetNotifier>(context, listen: false)
                       .changeActiveWidget(Bestellungen());

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:gastronomy/constants.dart';
 import 'package:gastronomy/dialogs/remove_order_dialog.dart';
 import 'package:gastronomy/provider/orders.dart';
-import 'package:gastronomy/sidemenu/add_order_dialog.dart';
 import 'package:provider/provider.dart';
 import 'status_item.dart';
 import 'package:gastronomy/extensions/neumorphism.dart';
@@ -13,7 +12,7 @@ class Order {
   String title;
   String? id;
   int desk;
-  int? status;
+  int status;
   bool isDone;
 
   Order({
@@ -22,8 +21,8 @@ class Order {
     required this.title,
     required this.desk,
     required this.isDone,
+    required this.status,
     this.id,
-    this.status,
   });
 
   Map<String, dynamic> toJson() => {
@@ -102,7 +101,7 @@ class OrderItem extends StatelessWidget {
                                 .bodyText2
                                 ?.copyWith(color: kTextColor))
                       ]))),
-                  const StatusItem(),
+                  StatusItem(status: order!.status),
                   const SizedBox(width: kDefaultPadding / 2),
                   Text(order!.createdTime.toString()),
                 ],
