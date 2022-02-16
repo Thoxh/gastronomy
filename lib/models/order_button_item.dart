@@ -35,9 +35,9 @@ class OrderButtonItem extends StatelessWidget {
         isDone: false);
     final provider = Provider.of<OrderProvider>(context, listen: false);
     provider.addOrder(order);
-    Timer(Duration(seconds: 5), () {
+    /*Timer(Duration(seconds: 5), () {
       provider.toggleOrderStatus(order, 1);
-    });
+    });*/
   }
 
   const OrderButtonItem({Key? key, @required this.orderButton})

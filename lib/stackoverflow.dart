@@ -1,14 +1,30 @@
-import 'dart:async';
-
-import 'package:firebase_core/firebase_core.dart';
-import 'package:flutter/cupertino.dart';
+/*import 'package:flutter/material.dart';
+import 'package:gastronomy/constants.dart';
 import 'package:gastronomy/models/order_item.dart';
-import 'package:intl/intl.dart';
-import 'package:gastronomy/api/firebase_api.dart';
+import 'package:gastronomy/provider/orders.dart';
 import 'package:provider/provider.dart';
 
+class OrderList extends StatelessWidget {
+  const OrderList({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    final provider = Provider.of<OrderProvider>(context);
+    final ordersFromProvider = provider.orders;
+
+    return ListView.builder(
+        padding: const EdgeInsets.symmetric(horizontal: kDefaultPadding / 1.5),
+        physics: const BouncingScrollPhysics(),
+        itemBuilder: (context, index) {
+          final order = ordersFromProvider[index];
+          return OrderItem(order: order);
+        },
+        itemCount: ordersFromProvider.length);
+  }
+}
+
 class OrderProvider extends ChangeNotifier {
-  /// Private List containing orders with there parameters
+  /// Private List filled by setOrders()
   List<Order> _orders = [];
 
   /// Getter list for orders to access the elements with isDone = false
@@ -20,26 +36,16 @@ class OrderProvider extends ChangeNotifier {
       _orders.where((order) => order.isDone == true).toList();
 
   void addOrder(Order order) {
-    /// Firebase logic
     FirebaseApi.addOrder(order);
-
-    /// Local logic
-    /*_orders.add(order);
-    notifyListeners(); */
   }
 
   void removeOrder(Order? order) {
     FirebaseApi.deleteOrder(order!);
-
-    /// Local logic
-    /*_orders.remove(order);
-    notifyListeners();*/
   }
 
   bool toggleOrderisDone(Order? order) {
     order!.isDone = !order.isDone;
     FirebaseApi.updateOrder(order);
-    //notfiyListeners();
     return order.isDone;
   }
 
@@ -50,10 +56,10 @@ class OrderProvider extends ChangeNotifier {
   }
 
   void setOrders(List<Order> orders) {
-    // update app after build is complete - would cause problems with the provider without
     WidgetsBinding.instance?.addPostFrameCallback((_) {
       _orders = orders;
       notifyListeners();
     });
   }
 }
+*/

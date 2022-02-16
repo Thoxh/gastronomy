@@ -11,8 +11,7 @@ class StatusItem extends StatelessWidget {
     return Container(
       height: 10,
       width: 10,
-      decoration:
-          new BoxDecoration(color: HexColor("#58C251"), shape: BoxShape.circle),
+      decoration: new BoxDecoration(color: color, shape: BoxShape.circle),
     );
   }
 }
