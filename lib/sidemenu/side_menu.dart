@@ -4,9 +4,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:gastronomy/constants.dart';
 import 'package:gastronomy/extensions/neumorphism.dart';
+import 'package:gastronomy/screens/bill_screen.dart';
 import 'package:gastronomy/screens/order_screen.dart';
 import 'package:gastronomy/screens/statistic_screen.dart';
-import 'package:gastronomy/sidemenu/add_order_dialog.dart';
 import 'package:gastronomy/models/side_menu_item.dart';
 import 'package:gastronomy/screens/archive_screen.dart';
 import 'package:provider/provider.dart';
@@ -14,7 +14,7 @@ import 'package:provider/provider.dart';
 import '../provider/sidemenu.dart';
 
 class SideMenu extends StatefulWidget {
-  SideMenu({Key? key, this.changeWidget}) : super(key: key);
+  const SideMenu({Key? key, this.changeWidget}) : super(key: key);
   final Function(Widget)? changeWidget;
 
   @override
@@ -43,14 +43,10 @@ class SideMenuState extends State<SideMenu> {
           child: Column(children: [
             // SideMenuHeader(),
             SizedBox(height: kDefaultPadding),
-            AddButton(
+            SideMenuButton(
               buttonText: "Geburtstag Dajana",
               buttonBackgroundColor: kPrimaryColor,
-              press: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) => AddOrderDialogWidget());
-              },
+              press: () {},
               textColor: Colors.white,
               icon: Icon(
                 Icons.event,
@@ -63,7 +59,7 @@ class SideMenuState extends State<SideMenu> {
             SizedBox(
               height: kDefaultPadding,
             ),
-            AddButton(
+            SideMenuButton(
               buttonText: "Nachrichten",
               buttonBackgroundColor: kBgDarkColor,
               press: () {},
@@ -91,7 +87,7 @@ class SideMenuState extends State<SideMenu> {
                 showBadge: true,
                 toggleActiveState: (activeState) {
                   Provider.of<ActiveWidgetNotifier>(context, listen: false)
-                      .changeActiveWidget(Bestellungen());
+                      .changeActiveWidget(OrderScreen());
                   clearIsActiveList();
                   setState(() {
                     isActiveList[0] = !activeState;
@@ -108,7 +104,7 @@ class SideMenuState extends State<SideMenu> {
               title: "Archiv",
               toggleActiveState: (activeState) {
                 Provider.of<ActiveWidgetNotifier>(context, listen: false)
-                    .changeActiveWidget(Archiv());
+                    .changeActiveWidget(ArchivScreen());
                 clearIsActiveList();
                 setState(() {
                   isActiveList[1] = !activeState;
@@ -126,7 +122,7 @@ class SideMenuState extends State<SideMenu> {
               title: "Statistik",
               toggleActiveState: (activeState) {
                 Provider.of<ActiveWidgetNotifier>(context, listen: false)
-                    .changeActiveWidget(Statistik());
+                    .changeActiveWidget(StatistikScreen());
                 clearIsActiveList();
                 setState(() {
                   isActiveList[2] = !activeState;
@@ -145,7 +141,7 @@ class SideMenuState extends State<SideMenu> {
               title: "Rechnung",
               toggleActiveState: (activeState) {
                 Provider.of<ActiveWidgetNotifier>(context, listen: false)
-                    .changeActiveWidget(Statistik());
+                    .changeActiveWidget(BillScreen());
                 clearIsActiveList();
                 setState(() {
                   isActiveList[3] = !activeState;
@@ -165,7 +161,7 @@ class SideMenuState extends State<SideMenu> {
               title: "Einstellungen",
               toggleActiveState: (activeState) {
                 Provider.of<ActiveWidgetNotifier>(context, listen: false)
-                    .changeActiveWidget(Statistik());
+                    .changeActiveWidget(BillScreen());
                 clearIsActiveList();
                 setState(() {
                   isActiveList[4] = !activeState;
@@ -203,8 +199,8 @@ class SideMenuHeader extends StatelessWidget {
   }
 }
 
-class AddButton extends StatelessWidget {
-  const AddButton(
+class SideMenuButton extends StatelessWidget {
+  const SideMenuButton(
       {Key? key,
       @required this.buttonBackgroundColor,
       @required this.buttonText,

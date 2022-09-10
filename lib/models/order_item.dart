@@ -1,14 +1,15 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:gastronomy/constants.dart';
 import 'package:gastronomy/dialogs/remove_order_dialog.dart';
 import 'package:gastronomy/provider/orders.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
 import 'status_item.dart';
-import 'package:gastronomy/extensions/neumorphism.dart';
 
 class Order {
-  String createdTime;
+  Timestamp createdTime;
   String icon;
   String title;
   String? id;
@@ -46,10 +47,16 @@ class Order {
       isDone: json['isDone']);
 }
 
-class OrderItem extends StatelessWidget {
+class OrderItem extends StatefulWidget {
   final Order? order;
 
   const OrderItem({Key? key, @required this.order}) : super(key: key);
+
+  @override
+  State<OrderItem> createState() => _OrderItemState();
+}
+
+class _OrderItemState extends State<OrderItem> {
   Color getColor(Order order) {
     if (order.status == 1) {
       return HexColor("#F5C04E");
@@ -59,6 +66,8 @@ class OrderItem extends StatelessWidget {
     return HexColor("#58C251");
   }
 
+  final bool _isElevated = true;
+
   @override
   Widget build(BuildContext context) {
     return Padding(
@@ -67,13 +76,13 @@ class OrderItem extends StatelessWidget {
         onTap: (() {}),
         onDoubleTap: () {
           final provider = Provider.of<OrderProvider>(context, listen: false);
-          final isDone = provider.toggleOrderisDone(order);
+          provider.toggleOrderisDone(widget.order);
         },
         onLongPress: () {
           showDialog(
               context: context,
               builder: (BuildContext context) =>
-                  RemoveOrderDialogWidget(order: order));
+                  RemoveOrderDialogWidget(order: widget.order));
         },
         child: Stack(
           children: [
@@ -82,6 +91,22 @@ class OrderItem extends StatelessWidget {
               decoration: BoxDecoration(
                 color: kBgDarkColor,
                 borderRadius: BorderRadius.circular(15),
+                boxShadow: _isElevated
+                    ? [
+                        const BoxShadow(
+                          color: Colors.grey,
+                          offset: Offset(4, 4),
+                          blurRadius: 15,
+                          spreadRadius: 1,
+                        ),
+                        const BoxShadow(
+                          color: Colors.white,
+                          offset: Offset(-4, -4),
+                          blurRadius: 15,
+                          spreadRadius: 1,
+                        ),
+                      ]
+                    : null,
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -89,12 +114,12 @@ class OrderItem extends StatelessWidget {
                   CircleAvatar(
                     radius: 16,
                     backgroundColor: Colors.transparent,
-                    backgroundImage: AssetImage(order!.icon),
+                    backgroundImage: AssetImage(widget.order!.icon),
                   ),
                   const SizedBox(width: kDefaultPadding / 1.5),
                   Expanded(
                       child: Text.rich(TextSpan(
-                          text: order!.title + " \n",
+                          text: widget.order!.title + " \n",
                           style: const TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -102,20 +127,21 @@ class OrderItem extends StatelessWidget {
                           ),
                           children: [
                         TextSpan(
-                            text: (order!.desk != 0)
-                                ? "Tisch " + order!.desk.toString()
+                            text: (widget.order!.desk != 0)
+                                ? "Tisch " + widget.order!.desk.toString()
                                 : "Abholung Bar",
                             style: Theme.of(context)
                                 .textTheme
                                 .bodyText2
                                 ?.copyWith(color: kTextColor))
                       ]))),
-                  StatusItem(color: getColor(order!)),
+                  StatusItem(color: getColor(widget.order!)),
                   const SizedBox(width: kDefaultPadding / 2),
-                  Text(order!.createdTime.toString()),
+                  Text(DateFormat('HH:mm')
+                      .format(widget.order!.createdTime.toDate())),
                 ],
               ),
-            ).addNeumorphism()
+            ),
           ],
         ),
       ),

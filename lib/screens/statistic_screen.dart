@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Statistik extends StatefulWidget {
-  const Statistik({Key? key}) : super(key: key);
+class StatistikScreen extends StatefulWidget {
+  const StatistikScreen({Key? key}) : super(key: key);
 
   @override
-  _StatistikState createState() => _StatistikState();
+  _StatistikScreenState createState() => _StatistikScreenState();
 }
 
-class _StatistikState extends State<Statistik> {
+class _StatistikScreenState extends State<StatistikScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(

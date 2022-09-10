@@ -1,47 +1,27 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:gastronomy/constants.dart';
-import 'package:gastronomy/models/order_item.dart';
-import 'package:gastronomy/provider/orders.dart';
+import 'package:gastronomy/utils.dart';
 import 'package:hexcolor/hexcolor.dart';
-import 'package:intl/intl.dart';
-import 'package:provider/provider.dart';
 
-class OrderButton {
+class MenuButton {
   String icon;
   String title;
   String subtitle;
 
-  OrderButton({
+  MenuButton({
     required this.icon,
     required this.title,
     required this.subtitle,
   });
 }
 
-class OrderButtonItem extends StatelessWidget {
-  final OrderButton? orderButton;
+class MenuButtonItem extends StatelessWidget {
+  final MenuButton? orderButton;
+
+  const MenuButtonItem({Key? key, @required this.orderButton})
+      : super(key: key);
 
   /// define data of the order and send it to the provider to add it to the list
-  void addOrder(BuildContext context) {
-    final order = Order(
-        createdTime: DateFormat('HH:mm').format(DateTime.now()),
-        icon: orderButton!.icon,
-        title: orderButton!.title,
-        desk: 0,
-        id: "",
-        status: 0,
-        isDone: false);
-    final provider = Provider.of<OrderProvider>(context, listen: false);
-    provider.addOrder(order);
-    /*Timer(Duration(seconds: 5), () {
-      provider.toggleOrderStatus(order, 1);
-    });*/
-  }
-
-  const OrderButtonItem({Key? key, @required this.orderButton})
-      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -50,8 +30,7 @@ class OrderButtonItem extends StatelessWidget {
           vertical: kDefaultPadding / 2, horizontal: kDefaultPadding / 2.5),
       child: InkWell(
         onTap: () {
-          /// Add an order with data from OrderButtons
-          addOrder(context);
+          Utils.addOrder(context, orderButton!);
         },
         child: Stack(
           children: [

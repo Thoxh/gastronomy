@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class Archiv extends StatefulWidget {
-  const Archiv({Key? key}) : super(key: key);
+class ArchivScreen extends StatefulWidget {
+  const ArchivScreen({Key? key}) : super(key: key);
 
   @override
-  _ArchivState createState() => _ArchivState();
+  _ArchivScreenState createState() => _ArchivScreenState();
 }
 
-class _ArchivState extends State<Archiv> {
+class _ArchivScreenState extends State<ArchivScreen> {
   @override
   Widget build(BuildContext context) {
     return Center(
